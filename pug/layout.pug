@@ -1,0 +1,92 @@
+doctype html
+head
+    title=title
+    meta(charset='utf-8')
+    meta(name='dev' content='Oh dong hyeong')
+
+    //- link(rel='stylesheet' type='text/css' href='/main.css')
+
+    script(src="https://code.jquery.com/jquery-3.4.1.min.js")
+body
+    header
+        #header_menu
+        .logo
+            span Apple Team !
+        .menu
+            ul
+                if user && user.id
+                    li
+                        a(href='/') HOME
+                    li
+                        a#logout(name='logout') 로그아웃
+                else
+                    li
+                        a(href='/') HOME
+                    li
+                        span(name="register" onclick="modal_btn_click(this);") 회원가입
+                    li
+                        span(name="login" onclick="modal_btn_click(this);") 로그인
+        .modal_container
+            if !(user && user.id)
+                .modal_content
+                    form#register_form(action='/auth/register' method='post')
+                        fieldset
+                            legend 회원가입
+                            .info_Form
+                                h3 정보를 입력해주세요.
+                                .Email
+                                    strong 이메일 주소 입력
+                                    input#email(type='email' placeholder='이메일을 입력해주세요.' name='email')
+                                    ul(type='disc')
+                                        li 이메일은 도용되지 않습니다.
+                                        li 개인 정보는 암호화되어 저장되기 때문에 걱정 안 하셔도 됩니다.
+                                div
+                                    strong 아이디 입력하시요.
+                                    input#id(type='text' placeholder='아이디를 입력하시오. 특수문자 안됩니다.' name='name')
+                                div
+                                    strong 비밀번호를 입력하시오.
+                                    input#password(type='password' placeholder='비밀번호를 입력하시오.' name='password')
+                                    strong 비밀번호를 재확인 해주세요.
+                                    input#password_check(type='password' placeholder='비밀번호를 재입력 해주세요.' name='password_check')
+                            .register-error=registerError
+                            input(type='submit' value='register')
+                    form#login-form(action="/auth/login" method='post')
+                        fieldset
+                            legend 로그인
+                            h1.login-form-logo Login
+                            .input-box
+                                label(for='login-email') email :
+                                input(name='email' placeholder='example@naver.com' type='email')
+                            .input-box
+                                label(for='login-password') PassWord :
+                                input(name='password' placeholder='PassWord' type='password')
+                            if loginError
+                                .error-message=loginError
+                            .submit-box
+                                button.signIn_but(type='submit') Login
+                                a#kakao-btn(href='/auth/kakao') kakao
+                                //- input#kakao_btn(type='button' name='kakao_login' value='Kakao' )
+            else
+                .main_content2
+                    block content
+        script.
+
+        script.
+            document.querySelector('#logout').addEventListener('click', async ()=>{
+                var inUser = !{JSON.stringify(user)};
+                var xhr=new XMLHttpRequest();
+                if(inUser){
+                    if (confirm('로그아웃을 하시겠습니까?')){
+                        xhr.onload = ()=>{
+                            if(xhr.status===200){
+                                location.reload();
+                            }else{
+                                console.error(xhr.responseText);
+                            }
+                        };
+                        xhr.open('POST', '/auth/logout/');
+                        xhr.send();
+                    }
+                }
+            });
+            
