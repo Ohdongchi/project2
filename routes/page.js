@@ -14,6 +14,18 @@ router.get('/', async(req, res, next) => {
         console.error(err);
         next(err);
     }
-})
-
+});
+router.get('/map', (req, res, next) => {
+    try {
+        res.render('kakaoMapApi', {
+            title: 'kakao map api',
+            user: req.user,
+            jskey: process.env.jsKey,
+        });
+        console.log(process.env.jskey);
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+});
 module.exports = router;
