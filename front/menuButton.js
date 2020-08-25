@@ -1,10 +1,10 @@
-function toggleBtn() {
+function menu_toggleBtn() {
   let bar1 = document.querySelector(".bar1");
   let bar2 = document.querySelector(".bar2");
   let bar3 = document.querySelector(".bar3");
 
-  var left = document.querySelector(".menu");
-  var modal = document.querySelector("#modal_background");
+  let left = document.querySelector(".menu");
+  let modal = document.querySelector("#modal_background");
 
   if (parseInt(left.style.left) == 0) {
     bar1.classList.toggle("bar1-move");
@@ -27,4 +27,14 @@ function toggleBtn() {
     left.style.left = "-15em";
     modal.style.display = "none";
   });
+}
+
+function register_login_modal_toggle(e) {
+  let register_division = document.querySelector("#register");
+  let login_division = document.querySelector("#login");
+  if (e.getAttribute("name") == "register") {
+    register_division.style.display = "block";
+  } else {
+    login_division.style.display = "block";
+  }
 }

@@ -15,11 +15,11 @@ li {
 /* Logo */
 .logo {
   background-color: #ff6947d3;
-  width: 1080px;
+  width: 35%;
   height: 4vh;
   line-height: 4vh;
   color: #020202be;
-  font-size: 2vw;
+  font-size: 2em;
   font-weight: bold;
   margin: 0 auto;
   text-align: center;

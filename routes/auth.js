@@ -1,5 +1,5 @@
 const express = require("express");
-const { User } = require("../models");
+const { User, Video } = require("../models");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
 const { isLoggedIn, isNotLoggedIn } = require("./logincheck");
