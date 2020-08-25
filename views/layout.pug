@@ -6,7 +6,7 @@ head
 
   link(href='/header.css' rel='stylesheet' type='text/css')
   link(href='/menu.css' rel='stylesheet' type='text/css')
-  link(href='/sign.css' rel='stylesheet' type='text/css')
+  link(href='/content.css' rel='stylesheet' type='text/css')
   //- link(rel='stylesheet' type='text/css' href='/main.css')
   script(src="https://code.jquery.com/jquery-3.5.1.min.js").
   script(src='/menuButton.js' type='text/javascript').
@@ -46,9 +46,13 @@ body
               #login
                 block login
 
-        else
           .main_content2
-            block content
+            .list-container
+              .card
+                img(src='#')
+                span 텍스트
+                span 해쉬태그
+          block content
   script.
     document.querySelector('#logout').addEventListener('click', async ()=>{
       var inUser = !{JSON.stringify(user)};
