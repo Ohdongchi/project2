@@ -1,0 +1,19 @@
+extends layout
+
+block login
+    form#login-form(action="/auth/login" method='post')
+        fieldset
+            legend 로그인
+            h1.login-form-logo Login
+            .input-box
+                label(for='login-email') email :
+                input(name='email' placeholder='example@naver.com' type='email')
+            .input-box
+                label(for='login-password') PassWord :
+                input(name='password' placeholder='PassWord' type='password')
+            if loginError
+                .error-message=loginError
+            .submit-box
+                button.signIn_but(type='submit') Login
+                a#kakao-btn(href='/auth/kakao') kakao
+                //- input#kakao_btn(type='button' name='kakao_login' value='Kakao' )
