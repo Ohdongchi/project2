@@ -16,6 +16,8 @@ const authRouter = require("./routes/auth");
 const { sequelize } = require("./models");
 const passportConfig = require("./passport"); // = ./passport = ./passport/index.js
 
+const favicon = require("serve-favicon");
+
 const app = express();
 sequelize.sync();
 passportConfig(passport);
@@ -42,6 +44,8 @@ app.use(
     },
   })
 );
+
+app.use(favicon(path.join(__dirname, "public", "favicons.ico")));
 
 app.use(flash());
 app.use(passport.initialize());

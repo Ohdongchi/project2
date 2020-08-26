@@ -3,6 +3,7 @@ head
   title=title
   meta(charset='utf-8')
   meta(name='dev' content='Oh dong hyeong')
+  meta(name="viewport" content="width=device-width, user-scalable=no")
 
   link(href='/header.css' rel='stylesheet' type='text/css')
   link(href='/menu.css' rel='stylesheet' type='text/css')
@@ -27,6 +28,8 @@ body
             li
               a(href='/') HOME
             li
+              a#upload(name='upload' href="/upload") 업로드
+            li
               a#logout(name='logout') 로그아웃
             li
               a#mapMove(name='maps' href='/map') map
@@ -34,25 +37,19 @@ body
             li
               a(href='/') HOME
             li
-              a(name="register" href='/register') 회원가입
-            li
               a(name="login" href='/login') 로그인
+            li
+              a(name="register" href='/register') 회원가입
+
       #content
         if !(user && user.id)
           .modal_container
             .modal_content
-              #register
-                block register
-              #login
-                block login
-
+              #register_login
+                block content
+        else
           .main_content2
-            .list-container
-              .card
-                img(src='#')
-                span 텍스트
-                span 해쉬태그
-          block content
+            block content
   script.
     document.querySelector('#logout').addEventListener('click', async ()=>{
       var inUser = !{JSON.stringify(user)};

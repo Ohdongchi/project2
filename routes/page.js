@@ -6,7 +6,7 @@ const { User, Video } = require("../models");
 
 router.get("/", async (req, res, next) => {
   try {
-    res.render("layout", {
+    res.render("main", {
       title: "Project2",
       user: req.user,
     });
@@ -44,6 +44,18 @@ router.get("/login", (req, res, next) => {
   try {
     res.render("login", {
       title: "login-page",
+      user: req.user,
+    });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+});
+
+router.get("/upload", (req, res, next) => {
+  try {
+    res.render("uploadPage", {
+      title: "업로드",
       user: req.user,
     });
   } catch (err) {
