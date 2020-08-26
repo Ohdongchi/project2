@@ -1,0 +1,7 @@
+extends layout
+
+block content
+    form.upload_form(method="post" action="/upload/data" enctype="multipart/form-data")
+        input(type='file' name='videoFile')
+        textarea(name="videoTitle" cols="50" )
+        textarea(name="videoHashTags" cols="50")
