@@ -2,7 +2,7 @@ const express = require("express");
 const { User, Video } = require("../models");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
-const { isLoggedIn, isNotLoggedIn } = require("./logincheck");
+const { isLoggedIn, isNotLoggedIn } = require("./loginCheck");
 const flash = require("connect-flash");
 
 require("dotenv").config();
@@ -10,7 +10,7 @@ require("dotenv").config();
 const router = express.Router();
 
 /*Register post*/
-router.post("/register", isNotLoggedIn, async (req, res, next) => {
+router.post("/register", async (req, res, next) => {
   try {
     const exUser = await User.findOne({ where: { email: req.body.email } });
     if (exUser) {
@@ -32,7 +32,7 @@ router.post("/register", isNotLoggedIn, async (req, res, next) => {
 });
 /*login post*/
 var n = 0;
-router.post("/login", isNotLoggedIn, (req, res, next) => {
+router.post("/login", (req, res, next) => {
   passport.authenticate("local", (error, user, info) => {
     if (error) {
       console.error(error);

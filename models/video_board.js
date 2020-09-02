@@ -3,20 +3,20 @@ module.exports = (sequelize, DataTypes) =>
     "videoBoard",
     {
       title: {
-        type: DataTypes.STRING(40),
+        type: DataTypes.STRING(255),
         allowNull: true,
         unique: true,
       },
       text: {
-        type: DataTypes.STRING(15),
+        type: DataTypes.STRING(255),
         allowNull: true, //공백가능
       },
       video_URL: {
-        type: DataTypes.STRING(100),
+        type: DataTypes.STRING(255),
         allowNull: true,
       },
       hashtag: {
-        type: DataTypes.STRING(10),
+        type: DataTypes.STRING(255),
         allowNull: false,
         defaultValue: "local",
       },

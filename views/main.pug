@@ -3,46 +3,14 @@ extends layout
 block content
     .list-container
         .card
-            img(src='#')
-            span 텍스트
+            video.video(src='')
+            span=data.title
             span 해쉬태그
-        .card
-            img(src='#')
-            span 텍스트
-            span 해쉬태그
-        .card
-            img(src='#')
-            span 텍스트
-            span 해쉬태그
-        .card
-            img(src='#')
-            span 텍스트
-            span 해쉬태그
-        .card
-            img(src='#')
-            span 텍스트
-            span 해쉬태그
-        .card
-            img(src='#')
-            span 텍스트
-            span 해쉬태그
-        .card
-            img(src='#')
-            span 텍스트
-            span 해쉬태그
-        .card
-            img(src='#')
-            span 텍스트
-            span 해쉬태그
-        .card
-            img(src='#')
-            span 텍스트
-            span 해쉬태그
-        .card
-            img(src='#')
-            span 텍스트
-            span 해쉬태그
-        .card
-            img(src='#')
-            span 텍스트
-            span 해쉬태그
+    script(type='text/javascript').
+        var url = !{JSON.stringify(data)};
+        var parent = document.querySelector('.list-container');
+
+        var video = document.querySelectorAll('.video');
+        for(let i=0; i<url.length;i++){
+            video[i].src=url[i].video_URL;
+        }
