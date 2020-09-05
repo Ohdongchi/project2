@@ -3,7 +3,7 @@ extends layout
 block content
     .list-container
         .card
-            video.video(src='')
+            video.video(src='' controls )
             span=data.title
             span 해쉬태그
     script(type='text/javascript').
@@ -13,4 +13,5 @@ block content
         var video = document.querySelectorAll('.video');
         for(let i=0; i<url.length;i++){
             video[i].src=url[i].video_URL;
+
         }

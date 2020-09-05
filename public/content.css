@@ -6,8 +6,10 @@
 .list-container > .card {
   display: flex;
   width: 230px;
+  height: auto;
   flex-flow: column nowrap;
   margin-bottom: 10px;
+  border: 1px solid black;
 }
 
 .list-container > .card > img {
@@ -26,4 +28,11 @@
   width: 50em;
   height: 100px;
   margin: 8px 12px;
+}
+
+/* card */
+
+.video {
+  width: 200px;
+  height: 200px;
 }
