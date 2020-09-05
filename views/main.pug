@@ -2,16 +2,20 @@ extends layout
 
 block content
     .list-container
-        .card
-            video.video(src='' controls )
-            span=data.title
-            span 해쉬태그
+        for data in datas
+            .card
+                video.video(src=data.video_URL controls )
+                span=data.title
+                span=data.text
     script(type='text/javascript').
-        var url = !{JSON.stringify(data)};
-        var parent = document.querySelector('.list-container');
-
-        var video = document.querySelectorAll('.video');
-        for(let i=0; i<url.length;i++){
-            video[i].src=url[i].video_URL;
-
-        }
+        //- window.onload = function () {
+        //-     var url = !{JSON.stringify(data)};
+        //-     var parent = document.querySelector('.card');
+        //-     alert(url.length);
+        //-     for(let i=0; i<url.length;i++){
+        //-         var video = document.createElement('video');
+        //-         video.setAttribute('class','video');
+        //-         video.src=url[i].video_URL;
+        //-         parent.appendChild(video);
+        //-     }
+        //- }

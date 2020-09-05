@@ -19,9 +19,9 @@ router.get("/", async (req, res, next) => {
       res.render("main", {
         title: "Project2",
         user: req.user,
-        data: value,
+        datas: value,
       });
-      console.log(value);
+      console.log(value[0]);
     })
     .catch(error => {
       console.error(error);
