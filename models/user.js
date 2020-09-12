@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) =>
         type: DataTypes.STRING(100),
         allowNull: true,
       },
+      profile_image: {
+        type: DataTypes.STRING(100),
+        allowNull: true,
+      },
     },
     {
       timestamps: true,

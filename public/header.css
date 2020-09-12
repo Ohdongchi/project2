@@ -12,6 +12,11 @@ li {
   position: relative;
 }
 
+a {
+  text-decoration: none;
+  color: black;
+}
+
 /* Logo */
 .logo {
   background-color: #ff6947d3;

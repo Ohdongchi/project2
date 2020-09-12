@@ -3,19 +3,9 @@ extends layout
 block content
     .list-container
         for data in datas
-            .card
+            a(href='/detail/'+data.id).card
                 video.video(src=data.video_URL controls )
-                span=data.title
-                span=data.text
+                span 닉네임: #{data.user.nick}
+                span 제목: #{data.title}
+                span 설명: #{data.text}
     script(type='text/javascript').
-        //- window.onload = function () {
-        //-     var url = !{JSON.stringify(data)};
-        //-     var parent = document.querySelector('.card');
-        //-     alert(url.length);
-        //-     for(let i=0; i<url.length;i++){
-        //-         var video = document.createElement('video');
-        //-         video.setAttribute('class','video');
-        //-         video.src=url[i].video_URL;
-        //-         parent.appendChild(video);
-        //-     }
-        //- }

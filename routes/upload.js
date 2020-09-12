@@ -55,6 +55,7 @@ router.post("/write", isLoggedIn, upload2.none(), async (req, res, next) => {
       title: req.body.Title,
       text: req.body.Text,
       video_URL: req.body.url,
+      userId: req.user.id,
     });
     const hashtag = req.body.Text.match(/#[^\s#]*/g);
     if (hashtag) {
@@ -73,7 +74,20 @@ router.post("/write", isLoggedIn, upload2.none(), async (req, res, next) => {
     next(err);
   }
 });
+router.post("/comment/:videoId", isLoggedIn, async (req, res, next) => {
+  try {
+    await Comment.create({
+      text: req.body.comment,
+      author: req.user.id,
+      videoBoardId: req.params.videoId,
+    });
 
+    res.redirect("/detail/" + req.params.videoId);
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+});
 // router.post("/hashtag", async (req, res, next) => {
 //   const query = req.query.hashtag;
 //   if (query) {

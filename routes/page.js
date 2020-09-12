@@ -3,10 +3,11 @@ const fs = require("fs");
 const router = express.Router();
 const { isLoggedIn, isNotLoggedIn } = require("./loginCheck");
 
-const { User, Video } = require("../models");
+const { User, Video, Comment } = require("../models");
+const video_board = require("../models/video_board");
 
 router.get("/", async (req, res, next) => {
-  Video.findAll({
+  await Video.findAll({
     include: [
       {
         model: User,
@@ -21,7 +22,7 @@ router.get("/", async (req, res, next) => {
         user: req.user,
         datas: value,
       });
-      console.log(value[0]);
+      console.log(value);
     })
     .catch(error => {
       console.error(error);
@@ -75,5 +76,56 @@ router.get("/upload", isLoggedIn, (req, res, next) => {
     console.error(err);
     next(err);
   }
+});
+
+router.get("/MyPage/:id", isLoggedIn, async (req, res, next) => {
+  await Video.findAll({
+    include: [
+      {
+        model: User,
+        attributes: ["id", "nick"],
+      },
+    ],
+    order: [["createdAt", "ASC"]],
+    where: { userId: req.params.id },
+  })
+    .then(value => {
+      res.render("myPage", {
+        title: "너튜브",
+        user: req.user,
+        lists: value,
+      });
+      console.log(value);
+    })
+    .catch(error => {
+      console.error(error);
+      next(error);
+    });
+});
+
+router.get("/detail/:postId", async (req, res, next) => {
+  await Video.findOne({
+    include: [
+      {
+        model: User,
+        attributes: ["id", "nick"],
+      },
+      {
+        model: Comment,
+      },
+    ],
+    where: { id: req.params.postId },
+  })
+    .then(value => {
+      res.render("videoDetail", {
+        title: "너튜브",
+        user: req.user,
+        result: value,
+      });
+    })
+    .catch(err => {
+      console.error(err);
+      next(err);
+    });
 });
 module.exports = router;

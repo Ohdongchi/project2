@@ -8,7 +8,7 @@ head
   link(href='/header.css' rel='stylesheet' type='text/css')
   link(href='/menu.css' rel='stylesheet' type='text/css')
   link(href='/content.css' rel='stylesheet' type='text/css')
-  //- link(rel='stylesheet' type='text/css' href='/main.css')
+  link(href='/detail.css' rel='stylesheet' type='text/css')
   script(src="https://code.jquery.com/jquery-3.5.1.min.js").
   script(src='/menuButton.js' type='text/javascript').
 body
@@ -29,6 +29,8 @@ body
               a(href='/') HOME
             li
               a#upload(name='upload' href="/upload") 업로드
+            li
+              a#my-page(name='myPage' href='/MyPage/'+user.id) 내 페이지
             li
               a#logout(name='logout') 로그아웃
             li
@@ -52,7 +54,7 @@ body
             block content
   script.
     document.querySelector('#logout').addEventListener('click', async ()=>{
-      var inUser = !{JSON.stringify(user)};
+      let inUser = !{JSON.stringify(user)};
       var xhr=new XMLHttpRequest();
       if(inUser){
         if (confirm('로그아웃을 하시겠습니까?')){

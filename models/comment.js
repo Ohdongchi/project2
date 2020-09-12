@@ -5,12 +5,20 @@ module.exports = (sequelize, DataTypes) =>
       text: {
         type: DataTypes.STRING(255),
         allowNull: false,
-        unique: true,
       },
-      parentComment: {
+      author: {
         type: DataTypes.STRING(255),
+        allowNull: false,
+      },
+      parent: {
+        type: DataTypes.INTEGER,
         allowNull: true,
-        unique: false,
+        defaultValue: 0,
+      },
+      dept: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        defaultValue: 0,
       },
     },
     {

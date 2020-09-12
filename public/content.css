@@ -30,4 +30,15 @@
   margin: 8px 12px;
 }
 
-/* card */
+/* My Page */
+
+.change {
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* register */
+#register_form * {
+  text-align: left;
+  display: block;
+}

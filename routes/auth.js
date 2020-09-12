@@ -1,16 +1,43 @@
 const express = require("express");
-const { User, Video } = require("../models");
+const multer = require("multer");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
 const { isLoggedIn, isNotLoggedIn } = require("./loginCheck");
 const flash = require("connect-flash");
+const path = require("path");
+
+const { User, Video } = require("../models");
 
 require("dotenv").config();
 
 const router = express.Router();
 
 /*Register post*/
-router.post("/register", async (req, res, next) => {
+
+const upload = multer({
+  //diskStorage,limits 속성
+  storage: multer.diskStorage({
+    destination(req, file, cb) {
+      cb(null, "profileImg/");
+    },
+    filename(req, file, cb) {
+      const ext = path.extname(file.originalname);
+      cb(
+        null,
+        path.basename(file.originalname, ext) + new Date().valueOf() + ext
+      );
+    },
+  }),
+  limits: { fileSize: 5 * 1024 * 1024 },
+});
+
+router.post("/img", isNotLoggedIn, upload.single("img"), (req, res) => {
+  console.log(req.file);
+  res.json({ url: `/img/${req.file.filename}` });
+});
+const upload2 = multer();
+
+router.post("/register", upload2.none(), async (req, res, next) => {
   try {
     const exUser = await User.findOne({ where: { email: req.body.email } });
     if (exUser) {
@@ -22,6 +49,7 @@ router.post("/register", async (req, res, next) => {
         email: req.body.email,
         nick: req.body.name,
         password: hash,
+        profile_image: req.body.ProfileUrl,
       });
       res.redirect("/");
     }
@@ -31,7 +59,6 @@ router.post("/register", async (req, res, next) => {
   }
 });
 /*login post*/
-var n = 0;
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", (error, user, info) => {
     if (error) {
@@ -45,7 +72,6 @@ router.post("/login", (req, res, next) => {
     }
 
     req.login(user, loginError => {
-      console.log(n++);
       if (loginError) {
         console.error(loginError);
         return next(loginError);

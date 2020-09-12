@@ -30,7 +30,9 @@ app.set("port", process.env.PORT);
 app.use(morgan("dev"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "front")));
+
 app.use("/video", express.static(path.join(__dirname, "uploads")));
+app.use("/img", express.static(path.join(__dirname, "profileImg")));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

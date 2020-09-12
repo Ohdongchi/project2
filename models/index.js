@@ -19,10 +19,11 @@ db.Comment = require("./comment")(sequelize, Sequelize);
 
 db.User.hasMany(db.Video);
 db.Video.belongsTo(db.User);
+
 db.Video.belongsToMany(db.Hashtag, { through: "PostHashtag" });
 db.Hashtag.belongsToMany(db.Video, { through: "PostHashtag" });
 
-db.Video.belongsToMany(db.Comment, { through: "VideoComment" });
-db.Comment.belongsToMany(db.Video, { through: "videoComment" });
+db.Video.hasMany(db.Comment);
+db.Comment.belongsTo(db.Video);
 
 module.exports = db;

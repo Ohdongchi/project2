@@ -1,0 +1,23 @@
+extends layout
+
+block content
+    .detail
+        video(src=result.video_URL controls)
+        div 제목 : #{result.title}
+        div 닉네임: #{result.user.nick}
+        div 내용 : #{result.text}
+        if user && user.id
+            form#commentForm(method='post' action='/upload/comment/'+result.id )
+                label 댓글
+                textarea#commentText(name="comment" rows="5")
+                input(type='submit' value='댓글달기')
+        .comment
+            if result.comments
+                for comment in result.comments
+                    div
+                        span#comment=comment.text
+                        input#comment-id(name='comment-id' type='hidden' value=comment.id)
+    script(type='text/javascript').
+        document.querySelector('#reply-btn').addEventListener('click', async ()=>{
+
+        });

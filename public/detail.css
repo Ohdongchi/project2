@@ -1,0 +1,42 @@
+.detail {
+  display: block;
+  width: 100%;
+  height: auto;
+  text-align: center;
+}
+.detail > video {
+  width: 80%;
+  height: 500px;
+}
+.detail > div {
+  width: 80%;
+  height: 50px;
+  line-height: 50px;
+  display: inline-block;
+}
+
+/* form */
+
+form {
+  width: 80%;
+  display: inline-block;
+  font-size: 24px;
+}
+/* comment form */
+#commentForm > * {
+  display: flex;
+}
+
+#commentForm > #commentText {
+  width: 100%;
+}
+
+#commentForm > input {
+  font-size: 16px;
+  padding: 5px 8px;
+}
+
+/* comment */
+#comment {
+  margin: 0 5px;
+}

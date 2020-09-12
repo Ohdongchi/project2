@@ -9,9 +9,6 @@ block content
                 .Email
                     strong 이메일 주소 입력
                     input#email(type='email' placeholder='이메일을 입력해주세요.' name='email')
-                    ul(type='disc')
-                        li 이메일은 도용되지 않습니다.
-                        li 개인 정보는 암호화되어 저장되기 때문에 걱정 안 하셔도 됩니다.
                 div
                     strong 아이디 입력하시요.
                     input#id(type='text' placeholder='아이디를 입력하시오. 특수문자 안됩니다.' name='name')
@@ -20,5 +17,25 @@ block content
                     input#password(type='password' placeholder='비밀번호를 입력하시오.' name='password')
                     strong 비밀번호를 재확인 해주세요.
                     input#password_check(type='password' placeholder='비밀번호를 재입력 해주세요.' name='password_check')
+                    input#profile-img(type='file' accept='image/*')
+            input#profile-img-url(type='hidden' name='ProfileUrl')
             .register-error=registerError
             input(type='submit' value='register')
+    script.
+        if(document.querySelector('#profile-img')) {
+            document.querySelector('#profile-img').addEventListener('change', function (){
+                var formData = new FormData();
+                formData.append('img', this.files[0]);
+                var xhr = new XMLHttpRequest();
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        var url = JSON.parse(xhr.responseText).url;
+                        document.getElementById('video-url').value = url;
+                    } else {
+                        console.error(xhr.responseText);
+                    }
+                };
+                xhr.open('POST', '/auth/img');
+                xhr.send(formData);
+            });
+        }

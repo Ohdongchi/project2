@@ -1,0 +1,16 @@
+extends layout
+
+block content
+    .change
+        form(method='post' action='/auth/ChangeNickname/'+user.id)
+            label(for='chNick') 닉네임 바꾸기 : 
+            input(type='text' name='chNick' placeholder='바꿀 닉네임 입력')
+            button(type='submit' ) 바꾸기
+    .list-container
+        for list in lists
+            .card
+                video.video(src=list.video_URL controls )
+                span 닉네임: #{user.nick}
+                span 제목: #{list.title}
+                span 설명: #{list.text}
+    script(type='text/javascript').
