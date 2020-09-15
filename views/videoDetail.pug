@@ -7,17 +7,48 @@ block content
         div 닉네임: #{result.user.nick}
         div 내용 : #{result.text}
         if user && user.id
-            form#commentForm(method='post' action='/upload/comment/'+result.id )
+            form#comment-form(method='post' action='/upload/comment/'+result.id )
                 label 댓글
-                textarea#commentText(name="comment" rows="5")
+                textarea#comment-text(name="comment" rows="5")
                 input(type='submit' value='댓글달기')
         .comment
             if result.comments
                 for comment in result.comments
                     div
                         span#comment=comment.text
-                        input#comment-id(name='comment-id' type='hidden' value=comment.id)
+                        input#reply-btn(type='button' onclick='showForm(this)' value='대댓글')
+                        if user && user.id
+                            form#reply-comment-form(method='post' action='/upload/comment/reply/'+result.id type='hidden' style='display:none;')
+                                input#comment-id(name='commentId' type='hidden' value=comment.id)
+                                input#comment-id(name='dept' type='' value=comment.dept+1)
+                                textarea.reply-comment-text(name='replyComment' )
+                                button#submit(type='submit') submit
     script(type='text/javascript').
-        document.querySelector('#reply-btn').addEventListener('click', async ()=>{
+        function showForm(obj){
+            let el = obj.nextSibling;
+            if (el.style.display=='block'){
+                el.style.display='none';
+            }
+            else{
+                el.style.display='block';
+            }
+        }
 
+        document.querySelector('#comment-form').addEventListener('submit',function (e){
+            var comment = document.querySelector('#comment-text');
+            if(comment.value == ''){
+                e.preventDefault();
+                alert('본문을 입력해주세요 공백은 안됩니다.');
+                bodyText.focus();
+                return false;
+            }
+        });
+        document.querySelector('#reply-comment-form').addEventListener('submit',function (e){
+            var comment = document.querySelector('.reply-comment-text');
+            if(comment.value == ''){
+                e.preventDefault();
+                alert('본문을 입력해주세요 공백은 안됩니다.');
+                bodyText.focus();
+                return false;
+            }
         });

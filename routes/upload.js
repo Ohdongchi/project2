@@ -88,6 +88,24 @@ router.post("/comment/:videoId", isLoggedIn, async (req, res, next) => {
     next(err);
   }
 });
+
+router.post("/comment/reply/:videoId", isLoggedIn, async (req, res, next) => {
+  try {
+    console.log(req.body);
+    await Comment.create({
+      text: req.body.replyComment,
+      author: req.user.id,
+      videoBoardId: req.params.videoId,
+      parent: req.body.commentId,
+      dept: req.body.dept,
+    });
+
+    res.redirect("/detail/" + req.params.videoId);
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+});
 // router.post("/hashtag", async (req, res, next) => {
 //   const query = req.query.hashtag;
 //   if (query) {

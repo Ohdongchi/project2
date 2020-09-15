@@ -29,6 +29,7 @@ app.set("port", process.env.PORT);
 
 app.use(morgan("dev"));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public/javascript")));
 app.use(express.static(path.join(__dirname, "front")));
 
 app.use("/video", express.static(path.join(__dirname, "uploads")));

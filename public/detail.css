@@ -23,15 +23,15 @@ form {
   font-size: 24px;
 }
 /* comment form */
-#commentForm > * {
+#comment-form > * {
   display: flex;
 }
 
-#commentForm > #commentText {
+#comment-form > #comment-text {
   width: 100%;
 }
 
-#commentForm > input {
+#comment-form > input {
   font-size: 16px;
   padding: 5px 8px;
 }
