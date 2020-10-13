@@ -5,4 +5,4 @@ uploads
 *.pptx
 key
 *.zip
-config.json
+config.js
