@@ -3,7 +3,7 @@ const fs = require("fs");
 const router = express.Router();
 const { isLoggedIn, isNotLoggedIn } = require("./loginCheck");
 
-const { User, Video, Comment } = require("../models");
+const { User, Video, Comment, sequelize } = require("../models");
 const video_board = require("../models/video_board");
 
 router.get("/", async (req, res, next) => {
@@ -114,10 +114,36 @@ router.get("/detail/:postId", async (req, res, next) => {
         model: Comment,
       },
     ],
+    order: [[{ model: Comment }, "group_Id", "ASC"]],
     where: { id: req.params.postId },
   })
     .then(value => {
       res.render("videoDetail", {
+        title: "너튜브",
+        user: req.user,
+        result: value,
+      });
+
+      // console.log(value.comments);
+    })
+    .catch(err => {
+      console.error(err);
+      next(err);
+    });
+});
+
+router.get("/edit/:postId", isLoggedIn, async (req, res, next) => {
+  await Video.findOne({
+    include: [
+      {
+        model: User,
+        attributes: ["id", "nick"],
+      },
+    ],
+    where: { id: req.params.postId },
+  })
+    .then(value => {
+      res.render("videoEdit", {
         title: "너튜브",
         user: req.user,
         result: value,

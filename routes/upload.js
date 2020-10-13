@@ -74,12 +74,44 @@ router.post("/write", isLoggedIn, upload2.none(), async (req, res, next) => {
     next(err);
   }
 });
+
+router.post(
+  "/edit/:postId",
+  isLoggedIn,
+  upload2.none(),
+  async (req, res, next) => {
+    try {
+      const videoUpload = await Video.update({
+        title: req.body.edit_title,
+        text: req.body.edit_text,
+      });
+      const hashtag = req.body.Text.match(/#[^\s#]*/g);
+      if (hashtag) {
+        const result = await Promise.all(
+          hashtag.map(tag =>
+            Hashtag.findOrCreate({
+              where: { title: tag.slice(1).toLowerCase() },
+            })
+          )
+        );
+        await videoUpload.addHashtags(result.map(r => r[0]));
+      }
+      return res.redirect("/");
+    } catch (err) {
+      console.error(err);
+      next(err);
+    }
+  }
+);
+
 router.post("/comment/:videoId", isLoggedIn, async (req, res, next) => {
   try {
     await Comment.create({
       text: req.body.comment,
       author: req.user.id,
       videoBoardId: req.params.videoId,
+      group_Id: req.body.max,
+      // order_no: 0,
     });
 
     res.redirect("/detail/" + req.params.videoId);
@@ -91,13 +123,13 @@ router.post("/comment/:videoId", isLoggedIn, async (req, res, next) => {
 
 router.post("/comment/reply/:videoId", isLoggedIn, async (req, res, next) => {
   try {
-    console.log(req.body);
     await Comment.create({
       text: req.body.replyComment,
       author: req.user.id,
       videoBoardId: req.params.videoId,
       parent: req.body.commentId,
       dept: req.body.dept,
+      group_Id: req.body.groupId,
     });
 
     res.redirect("/detail/" + req.params.videoId);

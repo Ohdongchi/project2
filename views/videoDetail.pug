@@ -11,16 +11,23 @@ block content
                 label 댓글
                 textarea#comment-text(name="comment" rows="5")
                 input(type='submit' value='댓글달기')
+                input#max(type='hidden' name='max' value='0')
+        if user && user.id == result.user.id
+            #edit_btn
+                button
+                    a(href='/edit/' + result.id) Edit
         .comment
             if result.comments
                 for comment in result.comments
                     div
                         span#comment=comment.text
-                        input#reply-btn(type='button' onclick='showForm(this)' value='대댓글')
-                        if user && user.id
+                        if user && user.id && (comment.dept <= 0)
+                            input#reply-btn(type='button' onclick='showForm(this)' value='대댓글')
                             form#reply-comment-form(method='post' action='/upload/comment/reply/'+result.id type='hidden' style='display:none;')
                                 input#comment-id(name='commentId' type='hidden' value=comment.id)
-                                input#comment-id(name='dept' type='' value=comment.dept+1)
+                                input#group-id(name='groupId' type='hidden' value=comment.group_Id)
+                                //- input#order-no(name='orderNumber' type='' value=comment.order_no+1)
+                                input#comment-dept-id(name='dept' type='hidden' value=comment.dept+1)
                                 textarea.reply-comment-text(name='replyComment' )
                                 button#submit(type='submit') submit
     script(type='text/javascript').
@@ -33,7 +40,7 @@ block content
                 el.style.display='block';
             }
         }
-
+    script(type='text/javascript').
         document.querySelector('#comment-form').addEventListener('submit',function (e){
             var comment = document.querySelector('#comment-text');
             if(comment.value == ''){
@@ -43,6 +50,7 @@ block content
                 return false;
             }
         });
+
         document.querySelector('#reply-comment-form').addEventListener('submit',function (e){
             var comment = document.querySelector('.reply-comment-text');
             if(comment.value == ''){
@@ -52,3 +60,18 @@ block content
                 return false;
             }
         });
+
+        document.querySelector('#comment-form').addEventListener('submit', function (e){
+            let a = !{JSON.stringify(result)};
+            if(a){
+                let array = new Array;
+
+                for(let i=0;i<a.comments.length;i++) {
+                    array.push(a.comments[i].group_Id);
+                }
+                let max = Math.max.apply(null,array);
+                document.querySelector('#max').value=parseInt(max)+1;
+            }
+        });
+
+    script(type='text/javascript').

@@ -20,6 +20,11 @@ module.exports = (sequelize, DataTypes) =>
         allowNull: true,
         defaultValue: 0,
       },
+      group_Id: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        defaultValue: 0,
+      },
     },
     {
       timestamps: true,
